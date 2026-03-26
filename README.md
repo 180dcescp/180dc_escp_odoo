@@ -5,8 +5,6 @@ This repository is the source of truth for the 180DC ESCP Odoo custom code and d
 ## Layout
 
 - `addons/`: custom Odoo modules deployed on the live instance
-- `migration_templates/`: CSV templates used for data migration work
-- `migrations/`: database migration scripts and notes
 - `scripts/`: local validation and deployment helpers
 - `docker-compose.yml`: runtime stack definition used on the server
 - `odoo.conf.template`: tracked template for the runtime Odoo config
@@ -15,12 +13,9 @@ This repository is the source of truth for the 180DC ESCP Odoo custom code and d
 
 Do not commit runtime secrets.
 
-The live server keeps these untracked files outside the deployment tree:
+The live server keeps runtime secrets and Odoo config outside the deployment tree.
 
-- `/etc/180dc/odoo/.env`
-- `/etc/180dc/odoo/odoo.conf`
-
-Use `.env.example` and `odoo.conf.template` as tracked references.
+Use `.env.example` and `odoo.conf.template` as tracked references only.
 
 ## Local Validation
 
@@ -43,14 +38,7 @@ Required GitHub Actions variables:
 - `DEPLOY_PORT`
 - `DEPLOY_PATH`
 
-The target host must already contain valid untracked runtime files:
-
-- `/etc/180dc/odoo/.env`
-- `/etc/180dc/odoo/odoo.conf`
-
-The target host must also provide a root-owned deploy wrapper:
-
-- `/usr/local/bin/odoo-deploy-apply`
+The target host must already be bootstrapped with runtime config files and the root-owned deploy wrapper used by `scripts/deploy.sh`.
 
 Manual deploy:
 
