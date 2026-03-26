@@ -2,6 +2,10 @@
 set -euo pipefail
 
 MODULES="${1:?modules csv required}"
+SECRETS_DIR="${REMOTE_SECRETS_DIR:-/etc/180dc/odoo}"
+
+test -f "$SECRETS_DIR/.env"
+test -f "$SECRETS_DIR/odoo.conf"
 
 cd /opt/180dc/apps/odoo
 
