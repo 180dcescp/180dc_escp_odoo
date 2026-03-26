@@ -24,8 +24,12 @@ rsync -az \
   "$ROOT_DIR/.env.example" \
   "$ROOT_DIR/odoo.conf.template" \
   "$ROOT_DIR/README.md" \
-  "$ROOT_DIR/scripts/" \
   "$SSH_TARGET:$DEPLOY_PATH/"
+
+rsync -az --delete \
+  -e "$RSYNC_SSH" \
+  "$ROOT_DIR/scripts/" \
+  "$SSH_TARGET:$DEPLOY_PATH/scripts/"
 
 rsync -az --delete \
   -e "$RSYNC_SSH" \
@@ -46,5 +50,5 @@ docker compose up -d odoo-db odoo
 docker exec odoo odoo -c /etc/odoo/odoo.conf -d odoo -u "$CUSTOM_MODULES" --stop-after-init
 docker restart odoo >/dev/null
 sleep 5
-docker inspect odoo --format '{{.State.Health.Status}}'
+test "\$(docker inspect odoo --format '{{.State.Health.Status}}')" = "healthy"
 EOF
