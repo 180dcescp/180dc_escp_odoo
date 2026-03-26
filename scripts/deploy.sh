@@ -49,6 +49,12 @@ test -f odoo.conf
 docker compose up -d odoo-db odoo
 docker exec odoo odoo -c /etc/odoo/odoo.conf -d odoo -u "$CUSTOM_MODULES" --stop-after-init
 docker restart odoo >/dev/null
-sleep 5
+for attempt in \$(seq 1 24); do
+  status="\$(docker inspect odoo --format '{{.State.Health.Status}}')"
+  if [ "\$status" = "healthy" ]; then
+    exit 0
+  fi
+  sleep 5
+done
 test "\$(docker inspect odoo --format '{{.State.Health.Status}}')" = "healthy"
 EOF
