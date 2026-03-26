@@ -6,6 +6,7 @@ db_host = odoo-db
 db_port = 5432
 db_user = __DB_USER__
 db_password = __DB_PASSWORD__
+db_name = __DB_NAME__
 dbfilter = ^__DB_NAME__$
 list_db = True
 proxy_mode = False
