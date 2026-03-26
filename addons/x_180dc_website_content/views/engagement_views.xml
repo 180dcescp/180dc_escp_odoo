@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_website_content_engagement_form" model="ir.ui.view">
+        <field name="name">x.180dc.engagement.form.website.content</field>
+        <field name="model">x_180dc.engagement</field>
+        <field name="inherit_id" ref="x_180dc_engagement.x_180dc_engagement_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Website">
+                    <group>
+                        <group string="Publication">
+                            <field name="x_public_visibility"/>
+                            <field name="x_effective_public_visibility" readonly="1"/>
+                            <field name="x_scheduled_public_visibility"/>
+                            <field name="x_scheduled_public_visibility_at"/>
+                            <field name="x_public_slug"/>
+                            <field name="x_featured"/>
+                        </group>
+                    </group>
+                    <group string="Public Summary">
+                        <field name="x_public_summary" placeholder="Client-safe summary for the public website"/>
+                    </group>
+                    <group string="Public Outcomes">
+                        <field name="x_public_outcomes" placeholder="One outcome per line"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="x_180dc_website_content_project_type_form" model="ir.ui.view">
+        <field name="name">x.180dc.engagement.project.type.form.website.content</field>
+        <field name="model">x_180dc.engagement.project_type</field>
+        <field name="inherit_id" ref="x_180dc_engagement.x_180dc_engagement_project_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <field name="x_short_description"/>
+                <field name="x_long_description"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

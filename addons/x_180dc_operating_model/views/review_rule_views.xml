@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_review_rule_action" model="ir.actions.act_window">
+        <field name="name">Review Rules</field>
+        <field name="res_model">x_180dc.review.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="x_180dc_review_rule_view_list" model="ir.ui.view">
+        <field name="name">x.180dc.review.rule.list</field>
+        <field name="model">x_180dc.review.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="rule_key"/>
+                <field name="template_id"/>
+                <field name="self_review_only"/>
+                <field name="requires_engagement"/>
+                <field name="reviewer_same_department"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="x_180dc_review_rule_view_form" model="ir.ui.view">
+        <field name="name">x.180dc.review.rule.form</field>
+        <field name="model">x_180dc.review.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="rule_key"/>
+                        <field name="template_id"/>
+                        <field name="active"/>
+                    </group>
+                    <group string="Subject Scope">
+                        <field name="subject_job_ids" widget="many2many_tags"/>
+                        <field name="subject_department_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Reviewer Scope">
+                        <field name="reviewer_job_ids" widget="many2many_tags"/>
+                        <field name="reviewer_department_ids" widget="many2many_tags"/>
+                        <field name="reviewer_same_department"/>
+                    </group>
+                    <group string="Workflow Constraints">
+                        <field name="self_review_only"/>
+                        <field name="requires_engagement"/>
+                        <field name="subject_must_belong_to_engagement"/>
+                        <field name="reviewer_must_belong_to_engagement"/>
+                        <field name="reviewer_must_match_engagement_consulting_reviewer"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+        id="x_180dc_review_rule_menu"
+        name="Review Rules"
+        parent="x_180dc_engagement.x_180dc_engagement_config_menu"
+        action="x_180dc_review_rule_action"
+        sequence="33"
+        groups="base.group_system"
+    />
+</odoo>

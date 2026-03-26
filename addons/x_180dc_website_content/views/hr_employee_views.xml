@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_website_content_hr_employee_form" model="ir.ui.view">
+        <field name="name">hr.employee.form.website.content</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="x_180dc_operating_model.x_180dc_operating_model_hr_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='current_membership_contract_id']" position="after">
+                <group string="Current Public Profile" colspan="2">
+                    <field name="x_current_public_profile_visibility" readonly="1"/>
+                    <field name="x_current_public_field_of_study" readonly="1"/>
+                    <field name="x_current_public_professional_background" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

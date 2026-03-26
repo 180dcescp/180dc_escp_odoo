@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="x_180dc_survey_definition_review_overall" model="x_180dc.survey.definition">
+        <field name="sequence">10</field>
+        <field name="name">Overall Experience Review</field>
+        <field name="key">180dc_review_overall_experience</field>
+        <field name="title">180 Overall Experience</field>
+        <field name="active">True</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_overall_q1" model="x_180dc.survey.definition.question">
+        <field name="definition_id" ref="x_180dc_survey_definition_review_overall"/>
+        <field name="sequence">10</field>
+        <field name="key">experience</field>
+        <field name="title">How has your overall 180DC experience been this cycle?</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_overall_q2" model="x_180dc.survey.definition.question">
+        <field name="definition_id" ref="x_180dc_survey_definition_review_overall"/>
+        <field name="sequence">20</field>
+        <field name="key">meetups</field>
+        <field name="title">How valuable were the meetups and community moments this cycle?</field>
+        <field name="question_type">simple_choice</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_overall_q2_a1" model="x_180dc.survey.definition.answer">
+        <field name="question_id" ref="x_180dc_survey_definition_review_overall_q2"/>
+        <field name="sequence">10</field>
+        <field name="value">1</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_overall_q2_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q2"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q2_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q2"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q2_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q2"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q2_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q2"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q3" model="x_180dc.survey.definition.question">
+        <field name="definition_id" ref="x_180dc_survey_definition_review_overall"/>
+        <field name="sequence">30</field>
+        <field name="key">learnings</field>
+        <field name="title">What did you learn this cycle, and what should 180DC improve?</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_overall_q4" model="x_180dc.survey.definition.question">
+        <field name="definition_id" ref="x_180dc_survey_definition_review_overall"/>
+        <field name="sequence">40</field>
+        <field name="key">motivation</field>
+        <field name="title">How motivated are you to stay involved next cycle?</field>
+        <field name="question_type">simple_choice</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_overall_q4_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q4"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q4_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q4"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q4_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q4"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q4_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q4"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_overall_q4_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_overall_q4"/><field name="sequence">50</field><field name="value">5</field></record>
+
+    <record id="x_180dc_survey_definition_review_executive" model="x_180dc.survey.definition">
+        <field name="sequence">20</field>
+        <field name="name">Associate Director Review</field>
+        <field name="key">180dc_review_executive</field>
+        <field name="title">Associate Director Feedback</field>
+        <field name="active">True</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_executive_q1" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_executive"/><field name="sequence">10</field><field name="key">ownership</field><field name="title">Ownership and delivery quality</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q1_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q1"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q1_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q1"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q1_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q1"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q1_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q1"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q1_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q1"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q2" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_executive"/><field name="sequence">20</field><field name="key">leadership</field><field name="title">Leadership and coordination</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q2_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q2"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q2_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q2"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q2_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q2"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q2_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q2"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q2_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_executive_q2"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_executive_q3" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_executive"/><field name="sequence">30</field><field name="key">development</field><field name="title">Strengths, development areas, and motivation</field></record>
+
+    <record id="x_180dc_survey_definition_review_project_leader" model="x_180dc.survey.definition">
+        <field name="sequence">30</field>
+        <field name="name">Project Leader Review</field>
+        <field name="key">180dc_review_project_leader</field>
+        <field name="title">180DC Project Leader Feedback</field>
+        <field name="active">True</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_project_leader_q1" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_project_leader"/><field name="sequence">10</field><field name="key">team_leadership</field><field name="title">Project leadership quality</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q1_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q1"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q1_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q1"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q1_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q1"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q1_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q1"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q1_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q1"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q2" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_project_leader"/><field name="sequence">20</field><field name="key">development</field><field name="title">Development, coaching needs, and motivation</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q2_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q2"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q2_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q2"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q2_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q2"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q2_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q2"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q2_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_project_leader_q2"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_project_leader_q3" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_project_leader"/><field name="sequence">30</field><field name="key">feedback</field><field name="title">Detailed feedback</field></record>
+
+    <record id="x_180dc_survey_definition_review_consultant" model="x_180dc.survey.definition">
+        <field name="sequence">40</field>
+        <field name="name">Consultant Review</field>
+        <field name="key">180dc_review_consultant</field>
+        <field name="title">Consultant / Senior Consultant Review</field>
+        <field name="active">True</field>
+    </record>
+    <record id="x_180dc_survey_definition_review_consultant_q1" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_consultant"/><field name="sequence">10</field><field name="key">performance</field><field name="title">Performance on the engagement</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q1_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q1"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q1_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q1"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q1_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q1"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q1_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q1"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q1_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q1"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q2" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_consultant"/><field name="sequence">20</field><field name="key">development</field><field name="title">Development and growth trajectory</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q2_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q2"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q2_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q2"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q2_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q2"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q2_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q2"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q2_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q2"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q3" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_consultant"/><field name="sequence">30</field><field name="key">motivation</field><field name="title">Motivation and next-step readiness</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q3_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q3"/><field name="sequence">10</field><field name="value">1</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q3_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q3"/><field name="sequence">20</field><field name="value">2</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q3_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q3"/><field name="sequence">30</field><field name="value">3</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q3_a4" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q3"/><field name="sequence">40</field><field name="value">4</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q3_a5" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_review_consultant_q3"/><field name="sequence">50</field><field name="value">5</field></record>
+    <record id="x_180dc_survey_definition_review_consultant_q4" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_review_consultant"/><field name="sequence">40</field><field name="key">feedback</field><field name="title">Detailed written feedback</field></record>
+
+    <record id="x_180dc_survey_definition_commitment" model="x_180dc.survey.definition">
+        <field name="sequence">50</field>
+        <field name="name">End-of-Cycle Commitment Survey</field>
+        <field name="key">180dc_commitment_next_cycle</field>
+        <field name="title">180DC End-of-Cycle Commitment Survey</field>
+        <field name="active">True</field>
+    </record>
+    <record id="x_180dc_survey_definition_commitment_q1" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_commitment"/><field name="sequence">10</field><field name="key">intent</field><field name="title">What is your current intention for next cycle?</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_commitment_q1_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_commitment_q1"/><field name="sequence">10</field><field name="value">Continue</field></record>
+    <record id="x_180dc_survey_definition_commitment_q1_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_commitment_q1"/><field name="sequence">20</field><field name="value">Unsure</field></record>
+    <record id="x_180dc_survey_definition_commitment_q1_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_commitment_q1"/><field name="sequence">30</field><field name="value">Step down</field></record>
+    <record id="x_180dc_survey_definition_commitment_q2" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_commitment"/><field name="sequence">20</field><field name="key">preferred_role</field><field name="title">What role or department would you ideally like to hold next cycle?</field></record>
+    <record id="x_180dc_survey_definition_commitment_q3" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_commitment"/><field name="sequence">30</field><field name="key">summer_break</field><field name="title">If next cycle is summer and you are project-staffable, do you prefer a summer break?</field><field name="question_type">simple_choice</field></record>
+    <record id="x_180dc_survey_definition_commitment_q3_a1" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_commitment_q3"/><field name="sequence">10</field><field name="value">No</field></record>
+    <record id="x_180dc_survey_definition_commitment_q3_a2" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_commitment_q3"/><field name="sequence">20</field><field name="value">Yes</field></record>
+    <record id="x_180dc_survey_definition_commitment_q3_a3" model="x_180dc.survey.definition.answer"><field name="question_id" ref="x_180dc_survey_definition_commitment_q3"/><field name="sequence">30</field><field name="value">Not applicable</field></record>
+    <record id="x_180dc_survey_definition_commitment_q4" model="x_180dc.survey.definition.question"><field name="definition_id" ref="x_180dc_survey_definition_commitment"/><field name="sequence">40</field><field name="key">notes</field><field name="title">Additional notes for Presidency / P&amp;O / Consulting</field></record>
+</odoo>

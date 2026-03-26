@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_member_contract_form" model="ir.ui.view">
+        <field name="name">hr.contract.form.180dc.member.contract</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="x_work_location_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

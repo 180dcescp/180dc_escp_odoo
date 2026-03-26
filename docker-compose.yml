@@ -1,0 +1,62 @@
+services:
+  odoo-db:
+    image: postgres@sha256:20edbde7749f822887a1a022ad526fde0a47d6b2be9a8364433605cf65099416
+    container_name: odoo-db
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    cpus: 0.50
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - .env
+    volumes:
+      - odoo_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - odoo-internal
+
+  odoo:
+    image: odoo@sha256:3cebb4f94bebb27c6e8a7a2fc22efbc5adc68d60a33ec3055eff9bda857561b4
+    container_name: odoo
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 1200m
+    cpus: 1.25
+    command: ["odoo", "-c", "/etc/odoo/odoo.conf"]
+    env_file:
+      - .env
+    volumes:
+      - odoo_data:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
+      - ./odoo.conf:/etc/odoo/odoo.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8069/web/login\", timeout=5)' >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    depends_on:
+      odoo-db:
+        condition: service_healthy
+    networks:
+      - proxy
+      - odoo-internal
+
+volumes:
+  odoo_db_data:
+  odoo_data:
+
+networks:
+  proxy:
+    external: true
+  odoo-internal:
+    driver: bridge

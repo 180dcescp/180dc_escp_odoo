@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_website_settings_action" model="ir.actions.act_window">
+        <field name="name">Website Settings</field>
+        <field name="res_model">x_180dc.website.settings</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="x_180dc_website_settings_form" model="ir.ui.view">
+        <field name="name">x.180dc.website.settings.form</field>
+        <field name="model">x_180dc.website.settings</field>
+        <field name="arch" type="xml">
+            <form string="Website Settings">
+                <sheet>
+                    <group>
+                        <group string="Identity">
+                            <field name="site_name"/>
+                            <field name="site_url"/>
+                            <field name="contact_email"/>
+                        </group>
+                    </group>
+                    <group string="Social Links">
+                        <field name="linkedin_url"/>
+                        <field name="instagram_url"/>
+                    </group>
+                    <group string="Intake Description">
+                        <field name="intake_description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

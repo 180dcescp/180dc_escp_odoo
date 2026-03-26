@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_promotion_request_view_list" model="ir.ui.view">
+        <field name="name">x.180dc.promotion.request.list</field>
+        <field name="model">x_180dc.promotion.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="current_department_id"/>
+                <field name="current_job_id"/>
+                <field name="requested_department_id"/>
+                <field name="requested_job_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="x_180dc_promotion_request_view_form" model="ir.ui.view">
+        <field name="name">x.180dc.promotion.request.form</field>
+        <field name="model">x_180dc.promotion.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_approve" type="object" string="Approve" invisible="state != 'submitted'" class="btn-primary"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="state != 'submitted'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('approved', 'rejected', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,rejected,cancelled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="employee_id"/>
+                            <field name="requested_by_user_id" readonly="1"/>
+                            <field name="approved_by_user_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="current_department_id" readonly="1"/>
+                            <field name="current_job_id" readonly="1"/>
+                            <field name="requested_department_id"/>
+                            <field name="requested_job_id"/>
+                            <field name="requested_work_location_id"/>
+                            <field name="approval_scope_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="reason"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="x_180dc_promotion_request_action" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">x_180dc.promotion.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="x_180dc_promotion_request_menu" name="Appointments" parent="x_180dc_engagement.x_180dc_menu_root" sequence="26" action="x_180dc_promotion_request_action" groups="base.group_system,hr.group_hr_user,hr.group_hr_manager,x_180dc_engagement.group_180dc_engagement_structural"/>
+</odoo>

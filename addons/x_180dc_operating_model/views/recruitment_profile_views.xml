@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_recruitment_profile_action" model="ir.actions.act_window">
+        <field name="name">Recruitment Profiles</field>
+        <field name="res_model">x_180dc.recruitment_profile</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="x_180dc_recruitment_profile_view_list" model="ir.ui.view">
+        <field name="name">x.180dc.recruitment.profile.list</field>
+        <field name="model">x_180dc.recruitment_profile</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="recruitment_owner_scope"/>
+                <field name="second_round_owner_scope"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="x_180dc_recruitment_profile_view_form" model="ir.ui.view">
+        <field name="name">x.180dc.recruitment.profile.form</field>
+        <field name="model">x_180dc.recruitment_profile</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="sequence"/>
+                        <field name="name"/>
+                        <field name="key"/>
+                        <field name="active"/>
+                    </group>
+                    <group string="Routing">
+                        <field name="recruitment_owner_scope"/>
+                        <field name="second_round_owner_scope"/>
+                    </group>
+                    <group string="Survey Titles">
+                        <field name="application_title_template"/>
+                        <field name="interview_title_template"/>
+                        <field name="case_title_template"/>
+                        <field name="second_round_title_template"/>
+                    </group>
+                    <group string="Essay Defaults">
+                        <field name="essay_question_1_template"/>
+                        <field name="essay_question_2_template"/>
+                        <field name="essay_question_3_template"/>
+                    </group>
+                    <group string="Interview Prompts">
+                        <field name="personal_fit_prompt_template"/>
+                        <field name="case_study_prompt_template"/>
+                        <field name="second_round_prompt_template"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+        id="x_180dc_recruitment_profile_menu"
+        name="Recruitment Profiles"
+        parent="x_180dc_engagement.x_180dc_engagement_config_menu"
+        action="x_180dc_recruitment_profile_action"
+        sequence="33"
+        groups="base.group_system"
+    />
+</odoo>

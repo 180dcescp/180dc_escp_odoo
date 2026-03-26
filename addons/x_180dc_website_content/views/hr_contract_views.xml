@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_website_content_hr_contract_form" model="ir.ui.view">
+        <field name="name">hr.contract.form.website.content</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="x_180dc_operating_model.x_180dc_operating_model_hr_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='x_valid_until_season_id']" position="after">
+                <field name="x_member_program"/>
+            </xpath>
+            <xpath expr="//field[@name='x_statement_acknowledged']" position="after">
+                <field name="x_public_profile_visibility"/>
+                <field name="x_public_field_of_study" invisible="x_public_profile_visibility == 'hidden'"/>
+                <field name="x_public_professional_background" invisible="x_public_profile_visibility == 'hidden'"/>
+                <field name="x_public_profile_ready" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_operating_model_hr_contract_form" model="ir.ui.view">
+        <field name="name">hr.contract.form.180dc.operating.model</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="x_180dc_member_contract.x_180dc_member_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='x_work_location_id']" position="after">
+                <field name="season_id"/>
+                <field name="x_valid_until_season_id"/>
+            </xpath>
+            <xpath expr="//field[@name='wage']" position="after">
+                <field name="x_contract_sent_at" readonly="1"/>
+                <field name="x_is_project_staffable" readonly="1"/>
+                <field name="x_staffing_status" invisible="not x_is_project_staffable"/>
+                <field name="x_nda_acknowledged"/>
+                <field name="x_statement_acknowledged"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_mark_contract_sent" type="object" string="Mark Contract Sent" class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

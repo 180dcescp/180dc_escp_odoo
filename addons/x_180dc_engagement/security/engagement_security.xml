@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_180dc_engagement_operational" model="res.groups">
+        <field name="name">Engagement Operational</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_180dc_engagement_structural" model="res.groups">
+        <field name="name">Engagement Structural</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('group_180dc_engagement_operational'))]"/>
+    </record>
+
+    <record id="group_180dc_engagement_project_leader" model="res.groups">
+        <field name="name">Engagement Project Leader</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="rule_180dc_engagement_operational_all" model="ir.rule">
+        <field name="name">180DC engagement operational all</field>
+        <field name="model_id" ref="model_x_180dc_engagement"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_180dc_engagement_operational'))]"/>
+    </record>
+
+    <record id="rule_180dc_engagement_structural_all" model="ir.rule">
+        <field name="name">180DC engagement structural all</field>
+        <field name="model_id" ref="model_x_180dc_engagement"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_180dc_engagement_structural'))]"/>
+    </record>
+
+    <record id="rule_180dc_engagement_system_all" model="ir.rule">
+        <field name="name">180DC engagement system all</field>
+        <field name="model_id" ref="model_x_180dc_engagement"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_180dc_engagement_project_leader_assigned" model="ir.rule">
+        <field name="name">180DC engagement project leader assigned only</field>
+        <field name="model_id" ref="model_x_180dc_engagement"/>
+        <field name="domain_force">[('member_ids.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_180dc_engagement_project_leader'))]"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+</odoo>

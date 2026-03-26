@@ -1,0 +1,20 @@
+{
+    "name": "180DC Engagement",
+    "summary": "Administrative engagement shell for 180DC",
+    "version": "18.0.2.0.0",
+    "category": "Operations",
+    "license": "LGPL-3",
+    "depends": ["mail", "contacts", "hr", "account", "crm"],
+    "data": [
+        "security/engagement_security.xml",
+        "security/ir.model.access.csv",
+        "data/engagement_cycle_data.xml",
+        "data/engagement_bootstrap_data.xml",
+        "views/engagement_views.xml",
+        "views/engagement_cycle_views.xml",
+        "views/account_move_views.xml",
+    ],
+    "post_init_hook": "post_init_hook",
+    "installable": True,
+    "application": True,
+}

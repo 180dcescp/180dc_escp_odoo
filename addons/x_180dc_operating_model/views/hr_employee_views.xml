@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_operating_model_hr_employee_form" model="ir.ui.view">
+        <field name="name">hr.employee.form.180dc.operating.model</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[field[@name='work_phone']]" position="inside">
+                <field name="x_escp_email"/>
+                <field name="x_program"/>
+                <field name="x_estimated_graduation_date"/>
+            </xpath>
+            <xpath expr="//sheet/group" position="inside">
+                <group string="Membership">
+                    <field name="is_current_member" readonly="1"/>
+                    <field name="current_season_id" readonly="1"/>
+                    <field name="current_membership_contract_id" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

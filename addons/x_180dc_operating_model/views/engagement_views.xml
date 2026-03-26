@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_operating_model_engagement_form" model="ir.ui.view">
+        <field name="name">x.180dc.engagement.form.operating.model</field>
+        <field name="model">x_180dc.engagement</field>
+        <field name="inherit_id" ref="x_180dc_engagement.x_180dc_engagement_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='member_ids']" position="after">
+                <field name="x_available_consulting_reviewer_ids" invisible="1"/>
+                <field name="x_consulting_reviewer_id" required="1" domain="[('id', 'in', x_available_consulting_reviewer_ids)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

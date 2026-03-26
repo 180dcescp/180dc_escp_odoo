@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="x_180dc.operating_policy" name="_x_180dc_ensure_default_policy"/>
+    <function model="x_180dc.season" name="_x_180dc_seed_from_existing_data"/>
+    <function model="x_180dc.season" name="_x_180dc_backfill_cycle_links"/>
+    <function model="x_180dc.role_group_rule" name="_x_180dc_seed_default_rules"/>
+    <function model="x_180dc.recruitment_profile" name="_x_180dc_seed_default_profiles"/>
+    <function model="hr.job" name="_x_180dc_seed_recruitment_profiles_on_jobs"/>
+    <function model="x_180dc.review.template" name="_x_180dc_ensure_default_templates"/>
+    <function model="survey.survey" name="_x_180dc_ensure_default_surveys"/>
+    <function model="x_180dc.review.rule" name="_x_180dc_seed_default_rules"/>
+    <function model="x_180dc.approval.scope" name="_x_180dc_seed_default_scopes"/>
+    <function model="x_180dc.promotion_approval_rule" name="_x_180dc_seed_default_rules"/>
+    <function model="x_180dc.consulting_reviewer_policy" name="_x_180dc_seed_default_policies"/>
+    <function model="hr.job" name="_x_180dc_backfill_job_surveys"/>
+</odoo>

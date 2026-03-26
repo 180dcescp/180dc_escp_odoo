@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_180dc_role_group_rule_action" model="ir.actions.act_window">
+        <field name="name">Role Permission Rules</field>
+        <field name="res_model">x_180dc.role_group_rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="x_180dc_role_group_rule_view_list" model="ir.ui.view">
+        <field name="name">x.180dc.role.group.rule.list</field>
+        <field name="model">x_180dc.role_group_rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="department_id"/>
+                <field name="job_id"/>
+                <field name="x_project_staffable"/>
+                <field name="group_ids" widget="many2many_tags"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="x_180dc_role_group_rule_view_form" model="ir.ui.view">
+        <field name="name">x.180dc.role.group.rule.form</field>
+        <field name="model">x_180dc.role_group_rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="department_id"/>
+                        <field name="job_id"/>
+                        <field name="x_project_staffable"/>
+                        <field name="active"/>
+                    </group>
+                    <group string="Business Groups">
+                        <field name="group_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+        id="x_180dc_role_group_rule_menu"
+        name="Role Permission Rules"
+        parent="x_180dc_engagement.x_180dc_engagement_config_menu"
+        action="x_180dc_role_group_rule_action"
+        sequence="30"
+        groups="base.group_system"
+    />
+</odoo>
