@@ -17,9 +17,7 @@ if [ -n "$DEPLOY_SSH_IDENTITY_FILE" ]; then
 fi
 RSYNC_SSH="ssh ${SSH_OPTS[*]}"
 
-ssh "${SSH_OPTS[@]}" "$SSH_TARGET" "\
-  test -d '$DEPLOY_PATH' && \
-  test -x /usr/local/bin/odoo-deploy-apply"
+ssh "${SSH_OPTS[@]}" "$SSH_TARGET" "test -d '$DEPLOY_PATH'"
 
 rsync -az --delete \
   --exclude "__pycache__/" \
