@@ -12,7 +12,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     env_file:
-      - .env
+      - /etc/180dc/odoo/.env
     volumes:
       - odoo_db_data:/var/lib/postgresql/data
     healthcheck:
@@ -27,17 +27,23 @@ services:
     image: odoo@sha256:3cebb4f94bebb27c6e8a7a2fc22efbc5adc68d60a33ec3055eff9bda857561b4
     container_name: odoo
     restart: unless-stopped
+    user: "odoo"
     security_opt:
       - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp
     mem_limit: 1200m
     cpus: 1.25
     command: ["odoo", "-c", "/etc/odoo/odoo.conf"]
     env_file:
-      - .env
+      - /etc/180dc/odoo/.env
     volumes:
       - odoo_data:/var/lib/odoo
       - ./addons:/mnt/extra-addons
-      - ./odoo.conf:/etc/odoo/odoo.conf:ro
+      - /etc/180dc/odoo/odoo.conf:/etc/odoo/odoo.conf:ro
     healthcheck:
       test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8069/web/login\", timeout=5)' >/dev/null 2>&1 || exit 1"]
       interval: 30s

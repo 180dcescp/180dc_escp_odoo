@@ -15,10 +15,10 @@ This repository is the source of truth for the 180DC ESCP Odoo custom code and d
 
 Do not commit runtime secrets.
 
-The live server keeps these untracked files in the deployment path:
+The live server keeps these untracked files outside the deployment tree:
 
-- `.env`
-- `odoo.conf`
+- `/etc/180dc/odoo/.env`
+- `/etc/180dc/odoo/odoo.conf`
 
 Use `.env.example` and `odoo.conf.template` as tracked references.
 
@@ -43,18 +43,22 @@ Required GitHub Actions variables:
 - `DEPLOY_PORT`
 - `DEPLOY_PATH`
 
-The target path must already contain valid untracked runtime files:
+The target host must already contain valid untracked runtime files:
 
-- `.env`
-- `odoo.conf`
+- `/etc/180dc/odoo/.env`
+- `/etc/180dc/odoo/odoo.conf`
+
+The target host must also provide a root-owned deploy wrapper:
+
+- `/usr/local/bin/odoo-deploy-apply`
 
 Manual deploy:
 
 ```bash
 DEPLOY_HOST=example \
-DEPLOY_USER=root \
+DEPLOY_USER=deploy \
 DEPLOY_PORT=22 \
 DEPLOY_PATH=/opt/180dc/apps/odoo \
+DEPLOY_SSH_IDENTITY_FILE=~/.ssh/your_deploy_key \
 bash scripts/deploy.sh
 ```
-

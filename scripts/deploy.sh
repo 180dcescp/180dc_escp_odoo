@@ -6,10 +6,16 @@ DEPLOY_HOST="${DEPLOY_HOST:?DEPLOY_HOST is required}"
 DEPLOY_USER="${DEPLOY_USER:?DEPLOY_USER is required}"
 DEPLOY_PORT="${DEPLOY_PORT:-22}"
 DEPLOY_PATH="${DEPLOY_PATH:?DEPLOY_PATH is required}"
+REMOTE_SECRETS_DIR="${REMOTE_SECRETS_DIR:-/etc/180dc/odoo}"
+DEPLOY_SSH_IDENTITY_FILE="${DEPLOY_SSH_IDENTITY_FILE:-}"
 
 CUSTOM_MODULES="$(python3 "$ROOT_DIR/scripts/custom_modules.py" --addons-dir "$ROOT_DIR/addons" --csv)"
 SSH_TARGET="${DEPLOY_USER}@${DEPLOY_HOST}"
-RSYNC_SSH="ssh -p ${DEPLOY_PORT}"
+SSH_OPTS=(-p "${DEPLOY_PORT}")
+if [ -n "$DEPLOY_SSH_IDENTITY_FILE" ]; then
+  SSH_OPTS+=(-i "$DEPLOY_SSH_IDENTITY_FILE" -o IdentitiesOnly=yes)
+fi
+RSYNC_SSH="ssh ${SSH_OPTS[*]}"
 
 rsync -az --delete \
   --exclude "__pycache__/" \
@@ -41,20 +47,10 @@ rsync -az --delete \
   "$ROOT_DIR/migrations/" \
   "$SSH_TARGET:$DEPLOY_PATH/migrations/"
 
-ssh -p "$DEPLOY_PORT" "$SSH_TARGET" "bash -s" <<EOF
+ssh "${SSH_OPTS[@]}" "$SSH_TARGET" "bash -s" <<EOF
 set -euo pipefail
 cd "$DEPLOY_PATH"
-test -f .env
-test -f odoo.conf
-docker compose up -d odoo-db odoo
-docker exec odoo odoo -c /etc/odoo/odoo.conf -d odoo -u "$CUSTOM_MODULES" --stop-after-init
-docker restart odoo >/dev/null
-for attempt in \$(seq 1 24); do
-  status="\$(docker inspect odoo --format '{{.State.Health.Status}}')"
-  if [ "\$status" = "healthy" ]; then
-    exit 0
-  fi
-  sleep 5
-done
-test "\$(docker inspect odoo --format '{{.State.Health.Status}}')" = "healthy"
+test -f "$REMOTE_SECRETS_DIR/.env"
+test -f "$REMOTE_SECRETS_DIR/odoo.conf"
+sudo /usr/local/bin/odoo-deploy-apply "$CUSTOM_MODULES"
 EOF
