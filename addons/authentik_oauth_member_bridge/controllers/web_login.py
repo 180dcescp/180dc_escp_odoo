@@ -1,3 +1,4 @@
+import os
 import json
 
 import werkzeug.urls
@@ -9,6 +10,11 @@ from odoo.addons.web.controllers.home import Home
 from odoo.addons.web.controllers.session import Session
 from odoo.addons.web.controllers.utils import ensure_db
 from odoo.http import request
+
+
+def _authentik_bridge_disabled():
+    value = os.getenv("AUTHENTIK_OAUTH_BRIDGE_DISABLED", "")
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 class AuthentikOnlyHome(Home):
@@ -40,6 +46,8 @@ class AuthentikOnlyHome(Home):
 
     @http.route("/web/login", type="http", auth="none", readonly=False)
     def web_login(self, redirect=None, **kw):
+        if _authentik_bridge_disabled():
+            return super().web_login(redirect=redirect, **kw)
         ensure_db()
         if request.httprequest.method == "POST":
             return request.make_response(
@@ -63,4 +71,6 @@ class AuthentikOnlyHome(Home):
 class AuthentikOnlySession(Session):
     @http.route("/web/session/authenticate", type="json", auth="none")
     def authenticate(self, db, login, password, base_location=None):
+        if _authentik_bridge_disabled():
+            return super().authenticate(db, login, password, base_location=base_location)
         raise AccessDenied("Password login is disabled; use Authentik SSO.")

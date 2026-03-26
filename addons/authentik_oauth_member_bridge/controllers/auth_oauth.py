@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 
@@ -15,8 +16,15 @@ from odoo.tools.misc import clean_context
 _logger = logging.getLogger(__name__)
 
 
+def _authentik_bridge_disabled():
+    value = os.getenv("AUTHENTIK_OAUTH_BRIDGE_DISABLED", "")
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 class AuthentikOAuthLogin(OAuthLogin):
     def _bridge_is_authentik_provider(self, provider):
+        if _authentik_bridge_disabled():
+            return False
         endpoint = (provider.get("auth_endpoint") or "").lower()
         return "login.180dc-escp.org" in endpoint and "/application/o/authorize" in endpoint
 
@@ -45,6 +53,8 @@ class AuthentikOAuthController(OAuthController):
         return request.env["auth.oauth.provider"].sudo().browse(provider_id)
 
     def _bridge_is_authentik_provider(self, oauth_provider):
+        if _authentik_bridge_disabled():
+            return False
         endpoint = (oauth_provider.auth_endpoint or "").lower()
         return "login.180dc-escp.org" in endpoint and "/application/o/authorize" in endpoint
 
