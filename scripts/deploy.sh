@@ -47,10 +47,4 @@ rsync -az --delete \
   "$ROOT_DIR/migrations/" \
   "$SSH_TARGET:$DEPLOY_PATH/migrations/"
 
-ssh "${SSH_OPTS[@]}" "$SSH_TARGET" "bash -s" <<EOF
-set -euo pipefail
-cd "$DEPLOY_PATH"
-test -f "$REMOTE_SECRETS_DIR/.env"
-test -f "$REMOTE_SECRETS_DIR/odoo.conf"
-sudo /usr/local/bin/odoo-deploy-apply "$CUSTOM_MODULES"
-EOF
+ssh "${SSH_OPTS[@]}" "$SSH_TARGET" "sudo /usr/local/bin/odoo-deploy-apply '$CUSTOM_MODULES'"
