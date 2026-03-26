@@ -1,3 +1,5 @@
+import os
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -55,8 +57,10 @@ class ResUsers(models.Model):
 
     @api.model
     def _x_180dc_allow_password_write(self):
+        disabled = os.getenv("AUTHENTIK_OAUTH_BRIDGE_DISABLED", "")
         return bool(
-            self.env.context.get("x_180dc_allow_password_write")
+            disabled.strip().lower() in {"1", "true", "yes", "on"}
+            or self.env.context.get("x_180dc_allow_password_write")
             or self.env.context.get("install_mode")
         )
 

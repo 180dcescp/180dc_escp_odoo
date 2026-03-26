@@ -19,6 +19,14 @@ def _authentik_bridge_disabled():
 
 class AuthentikOnlyHome(Home):
     @staticmethod
+    def _local_autologin_login():
+        return os.getenv("LOCAL_AUTOLOGIN_LOGIN", "escp@180dc.org").strip() or "escp@180dc.org"
+
+    @staticmethod
+    def _local_autologin_password():
+        return os.getenv("ODOO_ADMIN_PASSWORD", "")
+
+    @staticmethod
     def _authentik_provider():
         providers = request.env["auth.oauth.provider"].sudo().search([("enabled", "=", True)])
         for provider in providers:
@@ -44,11 +52,45 @@ class AuthentikOnlyHome(Home):
         }
         return "%s?%s" % (provider.auth_endpoint, werkzeug.urls.url_encode(params))
 
+    def _local_autologin_response(self, redirect=None):
+        ensure_db()
+        if request.session.uid:
+            response = request.redirect(redirect or "/odoo", 303)
+            response.autocorrect_location_header = False
+            return response
+        password = self._local_autologin_password()
+        if not password:
+            return request.make_response("Missing local autologin password.", status=503)
+        credential = {
+            "login": self._local_autologin_login(),
+            "password": password,
+            "type": "password",
+        }
+        request.session.authenticate(request.db, credential)
+        response = request.redirect(redirect or "/odoo", 303)
+        response.autocorrect_location_header = False
+        return response
+
+    @http.route("/", type="http", auth="none", readonly=False)
+    def index(self, **kw):
+        if _authentik_bridge_disabled():
+            return self._local_autologin_response("/odoo")
+        if request.session.uid:
+            response = request.redirect("/odoo", 303)
+        else:
+            response = request.redirect("/web/login?redirect=%2Fodoo%3F", 303)
+        response.autocorrect_location_header = False
+        return response
+
     @http.route("/web/login", type="http", auth="none", readonly=False)
     def web_login(self, redirect=None, **kw):
         if _authentik_bridge_disabled():
-            return super().web_login(redirect=redirect, **kw)
+            return self._local_autologin_response(redirect or "/odoo")
         ensure_db()
+        if request.session.uid:
+            response = request.redirect("/odoo", 303)
+            response.autocorrect_location_header = False
+            return response
         if request.httprequest.method == "POST":
             return request.make_response(
                 "Password login is disabled; use Authentik SSO.",
@@ -58,14 +100,8 @@ class AuthentikOnlyHome(Home):
         if not provider:
             return request.make_response("Authentik SSO is not configured.", status=503)
         auth_link = self._authentik_auth_link(provider)
-        body = (
-            "<html><body>"
-            "<h1>180DC Login</h1>"
-            "<p>Password login is disabled.</p>"
-            f'<p><a href="{auth_link}">Continue with Authentik SSO</a></p>'
-            "</body></html>"
-        )
-        return request.make_response(body, headers=[("Content-Type", "text/html; charset=utf-8")])
+        response = request.make_response("", headers=[("Location", auth_link)], status=303)
+        return response
 
 
 class AuthentikOnlySession(Session):

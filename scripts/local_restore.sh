@@ -4,10 +4,25 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 COMPOSE_FILE="$ROOT_DIR/docker-compose.local.yml"
 LOCAL_ENV="$ROOT_DIR/.local/odoo.env"
-DUMP_PATH="${1:?path to .sql.gz dump is required}"
+STATE_DIR="$ROOT_DIR/.local"
+LAST_RESTORED_PATH="$STATE_DIR/last_restored_dump"
+LAST_LOGIN_PATH="$STATE_DIR/last_local_login"
+
+latest_dump() {
+  find "$ROOT_DIR/backups" -maxdepth 1 -type f -name '*.sql.gz' -print0 \
+    | xargs -0 ls -1t 2>/dev/null \
+    | head -n 1
+}
+
+DUMP_PATH="${1:-$(latest_dump)}"
 
 if [ ! -f "$LOCAL_ENV" ]; then
   echo "Missing $LOCAL_ENV. Run: python3 scripts/setup_local_dev.py" >&2
+  exit 1
+fi
+
+if [ -z "$DUMP_PATH" ]; then
+  echo "No .sql.gz dump found under $ROOT_DIR/backups" >&2
   exit 1
 fi
 
@@ -38,6 +53,25 @@ docker compose -f "$COMPOSE_FILE" exec -T odoo-db psql -U "$POSTGRES_USER" -d po
 
 gunzip -c "$DUMP_PATH" | docker compose -f "$COMPOSE_FILE" exec -T odoo-db psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" >/dev/null
 
+LOCAL_LOGIN="$(
+docker compose -f "$COMPOSE_FILE" run --rm --no-deps -T odoo odoo shell -c /etc/odoo/odoo.conf -d "$POSTGRES_DB" <<PY | tail -n 1
+user = env['res.users'].sudo().search([('active', '=', True), ('share', '=', False)], order='id asc', limit=1)
+if not user:
+    user = env['res.users'].sudo().browse(1)
+if not user.exists():
+    raise SystemExit("No local login user available after restore.")
+user.password = "$ODOO_ADMIN_PASSWORD"
+env.cr.commit()
+print(user.login)
+PY
+)"
+
 docker compose -f "$COMPOSE_FILE" up -d odoo
 
+mkdir -p "$STATE_DIR"
+printf '%s\n' "$DUMP_PATH" > "$LAST_RESTORED_PATH"
+printf '%s\n' "$LOCAL_LOGIN" > "$LAST_LOGIN_PATH"
+
 echo "Restored $DUMP_PATH into $POSTGRES_DB"
+echo "Local login: $LOCAL_LOGIN"
+echo "Local password: $ODOO_ADMIN_PASSWORD"
