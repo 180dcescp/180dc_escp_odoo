@@ -8,7 +8,6 @@ This repository is the source of truth for the 180DC ESCP Odoo custom code and d
 - `backups/`: ignored local-only database dumps and restore inputs
 - `migration_templates/`: CSV templates used for data migration work
 - `migrations/`: database migration scripts and notes
-- `ops/caddy/`: shared reverse-proxy config currently fronting the Odoo service
 - `scripts/`: local validation and deployment helpers
 - `scripts/server/`: tracked server-side helpers that must be installed outside the repo checkout
 - `docker-compose.yml`: runtime stack definition used on the server
@@ -96,11 +95,6 @@ Install or refresh it on the host with:
 sudo install -m 0755 scripts/server/odoo-deploy-apply /usr/local/bin/odoo-deploy-apply
 ```
 
-The shared public entrypoint currently also depends on the tracked Caddy config at:
-
-- `ops/caddy/Caddyfile`
-
-That file is not pushed by `scripts/deploy.sh` yet because the live Caddy instance serves other applications besides Odoo.
 
 Manual deploy:
 
