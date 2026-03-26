@@ -1,5 +1,5 @@
-import base64
 import json
+import secrets
 
 from odoo import fields, http
 from odoo.exceptions import AccessDenied
@@ -14,28 +14,23 @@ class WebsiteAPIController(http.Controller):
         return request.make_json_response(payload, status=status)
 
     def _authenticate(self):
-        auth_header = request.httprequest.headers.get("Authorization", "")
-        if not auth_header.startswith("Basic "):
-            raise AccessDenied("Missing basic auth header")
+        configured_token = (
+            request.env["ir.config_parameter"].sudo().get_param("x_180dc_website_api.api_key", "").strip()
+        )
+        if not configured_token:
+            raise AccessDenied("Website API key is not configured")
 
-        try:
-            raw = auth_header.split(" ", 1)[1].strip()
-            decoded = base64.b64decode(raw).decode("utf-8")
-            login, password = decoded.split(":", 1)
-        except Exception as error:
-            raise AccessDenied("Malformed credentials") from error
+        header_token = request.httprequest.headers.get("X-API-Key", "").strip()
+        auth_header = request.httprequest.headers.get("Authorization", "").strip()
+        bearer_token = ""
+        if auth_header.lower().startswith("bearer "):
+            bearer_token = auth_header.split(" ", 1)[1].strip()
 
-        credential = {"type": "password", "login": login, "password": password}
-        env_info = {
-            "interactive": False,
-            "base_location": request.httprequest.url_root.rstrip("/"),
-            "HTTP_HOST": request.httprequest.environ.get("HTTP_HOST"),
-            "REMOTE_ADDR": request.httprequest.environ.get("REMOTE_ADDR"),
-        }
-        auth_info = request.env["res.users"].sudo().authenticate(request.env.cr.dbname, credential, env_info)
-        request.update_env(user=auth_info["uid"])
-        if not request.env.user.has_group("x_180dc_website_api.group_180dc_website_api_access"):
-            raise AccessDenied("User is not allowed to access the website API")
+        supplied_token = header_token or bearer_token
+        if not supplied_token:
+            raise AccessDenied("Missing API key")
+        if not secrets.compare_digest(supplied_token, configured_token):
+            raise AccessDenied("Invalid API key")
 
     def _json_payload(self):
         raw = request.httprequest.data or b"{}"

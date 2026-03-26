@@ -43,10 +43,22 @@ python3 scripts/setup_local_dev.py
 Start the local stack:
 
 ```bash
-docker compose -f docker-compose.local.yml up -d
+bash scripts/local_up.sh
 ```
 
-Restore a local database dump from the ignored `backups/` directory:
+That startup flow automatically restores the newest `backups/*.sql.gz` dump if one
+exists and has not already been applied to the local database.
+
+After a restore, the local stack assigns the first active internal user a local-only
+password equal to `ODOO_ADMIN_PASSWORD` from `.local/odoo.env` and prints the login.
+
+Force a fresh restore of the newest dump:
+
+```bash
+bash scripts/local_up.sh --force-restore
+```
+
+Restore a specific local database dump from the ignored `backups/` directory:
 
 ```bash
 bash scripts/local_restore.sh backups/your_dump.sql.gz
@@ -59,7 +71,8 @@ The local stack uses:
 - `odoo.conf.local.template`
 - ignored runtime files under `.local/`
 
-The Authentik login override is disabled locally via `AUTHENTIK_OAUTH_BRIDGE_DISABLED=1`, so normal Odoo password login works against a restored production dump.
+The Authentik login override is disabled locally via `AUTHENTIK_OAUTH_BRIDGE_DISABLED=1`.
+Local requests auto-login as `escp@180dc.org` using the local-only password seeded during restore.
 
 ## Deployment
 

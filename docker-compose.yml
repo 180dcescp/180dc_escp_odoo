@@ -41,7 +41,7 @@ services:
       - ./addons:/mnt/extra-addons
       - /etc/180dc/odoo/odoo.conf:/etc/odoo/odoo.conf:ro
     healthcheck:
-      test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8069/web/login\", timeout=5)' >/dev/null 2>&1 || exit 1"]
+      test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8069/web/static/img/favicon.ico\", timeout=5)' >/dev/null 2>&1 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
