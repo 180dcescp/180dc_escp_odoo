@@ -1,0 +1,43 @@
+# Forward auth snippet for authentik SSO
+(forward_auth) {
+	forward_auth authentik-server:9000 {
+		uri /outpost.goauthentik.io/auth/caddy
+		copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Email X-Authentik-Name X-Authentik-Uid
+		trusted_proxies private_ranges
+	}
+}
+
+# authentik SSO portal
+login.180dc-escp.org {
+	reverse_proxy authentik-server:9000
+}
+
+# n8n - protected by SSO
+n8n.180dc-escp.org {
+	import forward_auth
+	reverse_proxy n8n:5678
+}
+
+# n8n webhooks - NO authentication (public endpoint)
+hooks.180dc-escp.org {
+	reverse_proxy n8n:5678
+}
+
+# BIMI logo server
+bimi.180dc-escp.org {
+	@bimi path /.well-known/bimi/*
+	handle @bimi {
+		root * /static
+		file_server
+	}
+
+	# Return 404 for everything else
+	handle {
+		respond 404
+	}
+}
+
+# Odoo - native Odoo auth, including OAuth providers
+odoo.180dc-escp.org {
+	reverse_proxy odoo:8069
+}
