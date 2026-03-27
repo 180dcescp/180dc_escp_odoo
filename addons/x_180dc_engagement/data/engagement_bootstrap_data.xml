@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <function model="x_180dc.engagement" name="_x_180dc_backfill_cycle_ids"/>
-</odoo>

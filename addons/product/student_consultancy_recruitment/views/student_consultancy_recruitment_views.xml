@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_student_consultancy_position_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.position.tree</field>
+        <field name="model">student.consultancy.position</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="target_role_id"/>
+                <field name="cycle_period_id"/>
+                <field name="state"/>
+                <field name="application_deadline"/>
+                <field name="application_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_position_form" model="ir.ui.view">
+        <field name="name">student.consultancy.position.form</field>
+        <field name="model">student.consultancy.position</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="department_id"/>
+                        <field name="target_role_id"/>
+                        <field name="cycle_period_id"/>
+                        <field name="state"/>
+                        <field name="application_deadline"/>
+                        <field name="openings_count"/>
+                        <field name="is_public"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <group string="Applications">
+                        <field name="application_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_application_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.application.tree</field>
+        <field name="model">student.consultancy.application</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="applicant_name"/>
+                <field name="position_id"/>
+                <field name="applicant_email"/>
+                <field name="source"/>
+                <field name="state"/>
+                <field name="converted_member_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_application_form" model="ir.ui.view">
+        <field name="name">student.consultancy.application.form</field>
+        <field name="model">student.consultancy.application</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_reviewing" type="object" string="Review" invisible="state != 'new'"/>
+                    <button name="action_mark_interview" type="object" string="Interview" invisible="state not in ('new', 'reviewing')"/>
+                    <button name="action_accept" type="object" string="Accept" invisible="state in ('accepted', 'rejected', 'withdrawn')"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="state in ('accepted', 'rejected', 'withdrawn')"/>
+                    <button name="action_withdraw" type="object" string="Withdraw" invisible="state in ('accepted', 'rejected', 'withdrawn')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,reviewing,interview,accepted,rejected,withdrawn"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="position_id"/>
+                        <field name="partner_id"/>
+                        <field name="applicant_name"/>
+                        <field name="applicant_email"/>
+                        <field name="source"/>
+                    </group>
+                    <group>
+                        <field name="motivation"/>
+                        <field name="decision_note"/>
+                    </group>
+                    <group string="Conversion">
+                        <field name="converted_member_id" readonly="1"/>
+                        <field name="converted_membership_id" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_consultancy_positions" model="ir.actions.act_window">
+        <field name="name">Positions</field>
+        <field name="res_model">student.consultancy.position</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_student_consultancy_applications" model="ir.actions.act_window">
+        <field name="name">Applications</field>
+        <field name="res_model">student.consultancy.application</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_student_consultancy_recruitment_root"
+        name="Recruitment"
+        parent="student_consultancy_core.menu_student_consultancy_root"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_positions"
+        name="Positions"
+        parent="menu_student_consultancy_recruitment_root"
+        action="action_student_consultancy_positions"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_applications"
+        name="Applications"
+        parent="menu_student_consultancy_recruitment_root"
+        action="action_student_consultancy_applications"
+        sequence="20"
+    />
+</odoo>

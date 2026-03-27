@@ -1,0 +1,17 @@
+[options]
+addons_path = /mnt/extra-addons/product,/mnt/extra-addons/distributions
+data_dir = /var/lib/odoo
+admin_passwd = __ADMIN_PASSWD__
+db_host = odoo-db
+db_port = 5432
+db_user = __DB_USER__
+db_password = __DB_PASSWORD__
+db_name = odoo
+list_db = False
+proxy_mode = True
+smtp_server = __SMTP_SERVER__
+smtp_port = __SMTP_PORT__
+smtp_user = __SMTP_USER__
+smtp_password = __SMTP_PASSWORD__
+smtp_ssl = __SMTP_SSL__
+email_from = __EMAIL_FROM__

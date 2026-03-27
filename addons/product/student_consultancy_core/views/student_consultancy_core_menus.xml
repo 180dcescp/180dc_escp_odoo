@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_student_consultancy_root"
+        name="Student Consultancy"
+        sequence="35"
+        groups="student_consultancy_core.group_student_consultancy_user"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_settings"
+        name="Settings"
+        parent="menu_student_consultancy_root"
+        action="base_setup.action_general_configuration"
+        sequence="999"
+        groups="student_consultancy_core.group_student_consultancy_manager"
+    />
+</odoo>

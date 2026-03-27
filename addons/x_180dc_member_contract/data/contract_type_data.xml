@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <record id="x_180dc_contract_type_membership" model="hr.contract.type">
-        <field name="name">Membership</field>
-    </record>
-</odoo>

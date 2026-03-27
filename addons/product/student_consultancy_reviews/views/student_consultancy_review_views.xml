@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_student_consultancy_review_template_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.review.template.tree</field>
+        <field name="model">student.consultancy.review.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="scope"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_review_template_form" model="ir.ui.view">
+        <field name="name">student.consultancy.review.template.form</field>
+        <field name="model">student.consultancy.review.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="scope"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="prompt"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_review_assignment_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.review.assignment.tree</field>
+        <field name="model">student.consultancy.review.assignment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="subject_member_id"/>
+                <field name="reviewer_member_id"/>
+                <field name="project_id"/>
+                <field name="cycle_period_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_review_assignment_form" model="ir.ui.view">
+        <field name="name">student.consultancy.review.assignment.form</field>
+        <field name="model">student.consultancy.review.assignment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_sent" type="object" string="Mark Sent" invisible="state != 'draft'"/>
+                    <button name="action_start" type="object" string="Start" invisible="state != 'sent'"/>
+                    <button name="action_mark_done" type="object" string="Done" invisible="state not in ('sent', 'in_progress')"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('done', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,in_progress,done,cancelled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="template_id"/>
+                        <field name="subject_member_id"/>
+                        <field name="reviewer_member_id"/>
+                        <field name="project_id"/>
+                        <field name="cycle_period_id"/>
+                        <field name="due_date"/>
+                    </group>
+                    <group>
+                        <field name="feedback_text"/>
+                        <field name="completed_on" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_consultancy_review_templates" model="ir.actions.act_window">
+        <field name="name">Review Templates</field>
+        <field name="res_model">student.consultancy.review.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_student_consultancy_review_assignments" model="ir.actions.act_window">
+        <field name="name">Review Assignments</field>
+        <field name="res_model">student.consultancy.review.assignment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_student_consultancy_reviews_root"
+        name="Reviews"
+        parent="student_consultancy_core.menu_student_consultancy_root"
+        sequence="40"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_review_templates"
+        name="Templates"
+        parent="menu_student_consultancy_reviews_root"
+        action="action_student_consultancy_review_templates"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_review_assignments"
+        name="Assignments"
+        parent="menu_student_consultancy_reviews_root"
+        action="action_student_consultancy_review_assignments"
+        sequence="20"
+    />
+</odoo>

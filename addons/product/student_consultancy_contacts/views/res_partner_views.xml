@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_student_consultancy" model="ir.ui.view">
+        <field name="name">res.partner.form.student.consultancy</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Student Consultancy" groups="student_consultancy_core.group_student_consultancy_user">
+                    <group>
+                        <field name="sc_contact_kind" readonly="1"/>
+                        <field name="sc_preferred_pronouns"/>
+                        <field name="sc_study_program"/>
+                        <field name="sc_graduation_year"/>
+                    </group>
+                    <group string="Consultancy Flags" col="4">
+                        <field name="sc_is_member_contact"/>
+                        <field name="sc_is_alumni_contact"/>
+                        <field name="sc_is_applicant_contact"/>
+                        <field name="sc_is_client_contact"/>
+                    </group>
+                    <group>
+                        <field name="sc_public_bio"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

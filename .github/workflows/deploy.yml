@@ -19,7 +19,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Validate repository
-        run: python3 scripts/validate_repo.py
+        run: python3 ops/scripts/validate_repo.py
+      - name: Validate addon discovery
+        run: python3 ops/scripts/custom_modules.py --addons-dir addons --csv
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
@@ -29,4 +31,4 @@ jobs:
           ssh-keyscan -H -t rsa,ecdsa,ed25519 -p "${DEPLOY_PORT:-22}" "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
           test -s ~/.ssh/known_hosts
       - name: Deploy to Odoo host
-        run: bash scripts/deploy.sh
+        run: bash ops/scripts/deploy.sh

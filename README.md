@@ -1,17 +1,53 @@
-# 180DC ESCP Odoo
+# Student Consultancy Odoo
 
-This repository is the source of truth for the 180DC ESCP Odoo custom code and deployment assets.
+This repository is a free, Community-first student consultancy addon suite for
+self-hosted Odoo 18 instances.
 
 ## Layout
 
-- `addons/`: custom Odoo modules deployed on the live instance
+- `addons/product/`: reusable `student_consultancy_*` addons
+- `addons/distributions/`: distribution overlays such as `student_consultancy_180dc_escp`
+- `docs/`: install, architecture, publishing, dependency, and upgrade docs
+- `ops/`: operational tooling, templates, examples, compose files, and validation scripts
 - `backups/`: ignored local-only database dumps and restore inputs
-- `migration_templates/`: CSV templates used for data migration work
-- `migrations/`: database migration scripts and notes
-- `scripts/`: local validation and deployment helpers
-- `scripts/server/`: tracked server-side helpers that must be installed outside the repo checkout
-- `docker-compose.yml`: runtime stack definition used on the server
-- `odoo.conf.template`: tracked template for the runtime Odoo config
+
+## Installable Product Modules
+
+- `student_consultancy_meta`
+- `student_consultancy_core`
+- `student_consultancy_contacts`
+- `student_consultancy_cycles`
+- `student_consultancy_hr`
+- `student_consultancy_recruitment`
+- `student_consultancy_projects`
+- `student_consultancy_reviews`
+- `student_consultancy_website`
+- `student_consultancy_180dc_escp`
+
+## Local Validation
+
+```bash
+python3 ops/scripts/validate_repo.py
+```
+
+## Local Odoo
+
+Bootstrap local runtime files:
+
+```bash
+python3 ops/scripts/setup_local_dev.py
+```
+
+Start the local stack:
+
+```bash
+bash ops/scripts/local_up.sh
+```
+
+The Odoo config templates now expose all addon roots:
+
+- `/mnt/extra-addons/product`
+- `/mnt/extra-addons/distributions`
 
 ## Runtime Secrets
 
@@ -22,61 +58,9 @@ The live server keeps these untracked files outside the deployment tree:
 - `/etc/180dc/odoo/.env`
 - `/etc/180dc/odoo/odoo.conf`
 
-Use `.env.example` and `odoo.conf.template` as tracked references.
-
-## Local Validation
-
-```bash
-python3 scripts/validate_repo.py
-```
-
-## Local Odoo Only
-
-This repository includes a local stack for testing Odoo itself without SMTP, Authentik, or Caddy.
-
-Bootstrap local runtime files:
-
-```bash
-python3 scripts/setup_local_dev.py
-```
-
-Start the local stack:
-
-```bash
-bash scripts/local_up.sh
-```
-
-That startup flow automatically restores the newest `backups/*.sql.gz` dump if one
-exists and has not already been applied to the local database.
-
-After a restore, the local stack assigns the first active internal user a local-only
-password equal to `ODOO_ADMIN_PASSWORD` from `.local/odoo.env` and prints the login.
-
-Force a fresh restore of the newest dump:
-
-```bash
-bash scripts/local_up.sh --force-restore
-```
-
-Restore a specific local database dump from the ignored `backups/` directory:
-
-```bash
-bash scripts/local_restore.sh backups/your_dump.sql.gz
-```
-
-The local stack uses:
-
-- `docker-compose.local.yml`
-- `.env.local.example`
-- `odoo.conf.local.template`
-- ignored runtime files under `.local/`
-
-The Authentik login override is disabled locally via `AUTHENTIK_OAUTH_BRIDGE_DISABLED=1`.
-Local requests auto-login as `escp@180dc.org` using the local-only password seeded during restore.
+Use `ops/examples/env.example` and `ops/templates/odoo.conf.template` as tracked references.
 
 ## Deployment
-
-The deployment workflow syncs this repository to the server path and upgrades all custom modules.
 
 Required GitHub Actions secret:
 
@@ -89,26 +73,6 @@ Required GitHub Actions variables:
 - `DEPLOY_PORT`
 - `DEPLOY_PATH`
 
-The target host must already contain valid untracked runtime files:
-
-- `/etc/180dc/odoo/.env`
-- `/etc/180dc/odoo/odoo.conf`
-
-The target host must also provide a root-owned deploy wrapper:
-
-- `/usr/local/bin/odoo-deploy-apply`
-
-The tracked source for that wrapper lives at:
-
-- `scripts/server/odoo-deploy-apply`
-
-Install or refresh it on the host with:
-
-```bash
-sudo install -m 0755 scripts/server/odoo-deploy-apply /usr/local/bin/odoo-deploy-apply
-```
-
-
 Manual deploy:
 
 ```bash
@@ -117,5 +81,13 @@ DEPLOY_USER=deploy \
 DEPLOY_PORT=22 \
 DEPLOY_PATH=/opt/180dc/apps/odoo \
 DEPLOY_SSH_IDENTITY_FILE=~/.ssh/your_deploy_key \
-bash scripts/deploy.sh
+bash ops/scripts/deploy.sh
 ```
+
+See the docs for the final product packaging direction:
+
+- `docs/architecture.md`
+- `docs/install.md`
+- `docs/publishing.md`
+- `docs/dependency_matrix.md`
+- `docs/upgrades.md`

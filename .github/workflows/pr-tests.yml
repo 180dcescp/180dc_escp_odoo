@@ -12,6 +12,6 @@ jobs:
         with:
           python-version: "3.12"
       - name: Validate repository
-        run: python3 scripts/validate_repo.py
-      - name: Validate deploy script syntax
-        run: bash -n scripts/deploy.sh
+        run: python3 ops/scripts/validate_repo.py
+      - name: Validate addon discovery
+        run: python3 ops/scripts/custom_modules.py --addons-dir addons --csv

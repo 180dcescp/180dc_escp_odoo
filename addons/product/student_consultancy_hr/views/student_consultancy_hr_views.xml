@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_student_consultancy_department_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.department.tree</field>
+        <field name="model">student.consultancy.department</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="lead_member_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_role_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.role.tree</field>
+        <field name="model">student.consultancy.role</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hierarchy_rank"/>
+                <field name="eligible_for_staffing"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_member_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.member.tree</field>
+        <field name="model">student.consultancy.member</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="current_department_id"/>
+                <field name="current_role_id"/>
+                <field name="status"/>
+                <field name="is_public"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_member_form" model="ir.ui.view">
+        <field name="name">student.consultancy.member.form</field>
+        <field name="model">student.consultancy.member</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="user_id"/>
+                        <field name="status" readonly="1"/>
+                        <field name="current_department_id" readonly="1"/>
+                        <field name="current_role_id" readonly="1"/>
+                        <field name="active"/>
+                    </group>
+                    <group string="Website Visibility">
+                        <field name="visibility_consent"/>
+                        <field name="profile_ready"/>
+                        <field name="is_public"/>
+                        <field name="public_sort_order"/>
+                    </group>
+                    <group>
+                        <field name="profile_bio"/>
+                    </group>
+                    <group string="Memberships">
+                        <field name="membership_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_membership_tree" model="ir.ui.view">
+        <field name="name">student.consultancy.membership.tree</field>
+        <field name="model">student.consultancy.membership</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="member_id"/>
+                <field name="role_id"/>
+                <field name="department_id"/>
+                <field name="state"/>
+                <field name="start_cycle_period_id"/>
+                <field name="valid_through_cycle_period_id"/>
+                <field name="eligible_for_staffing"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_student_consultancy_membership_form" model="ir.ui.view">
+        <field name="name">student.consultancy.membership.form</field>
+        <field name="model">student.consultancy.membership</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object" string="Activate" invisible="state == 'active'"/>
+                    <button name="action_pause" type="object" string="Pause" invisible="state != 'active'"/>
+                    <button name="action_end" type="object" string="End" invisible="state == 'ended'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="incoming,active,paused,ended"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="member_id"/>
+                        <field name="role_id"/>
+                        <field name="department_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <group string="Cycle Validity">
+                        <field name="start_cycle_period_id"/>
+                        <field name="valid_through_cycle_period_id"/>
+                        <field name="eligible_for_staffing" readonly="1"/>
+                        <field name="is_current" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_consultancy_members" model="ir.actions.act_window">
+        <field name="name">Members</field>
+        <field name="res_model">student.consultancy.member</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_student_consultancy_memberships" model="ir.actions.act_window">
+        <field name="name">Memberships</field>
+        <field name="res_model">student.consultancy.membership</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_student_consultancy_departments" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">student.consultancy.department</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_student_consultancy_roles" model="ir.actions.act_window">
+        <field name="name">Roles</field>
+        <field name="res_model">student.consultancy.role</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_student_consultancy_hr_root"
+        name="People"
+        parent="student_consultancy_core.menu_student_consultancy_root"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_members"
+        name="Members"
+        parent="menu_student_consultancy_hr_root"
+        action="action_student_consultancy_members"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_memberships"
+        name="Memberships"
+        parent="menu_student_consultancy_hr_root"
+        action="action_student_consultancy_memberships"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_departments"
+        name="Departments"
+        parent="menu_student_consultancy_hr_root"
+        action="action_student_consultancy_departments"
+        sequence="30"
+        groups="student_consultancy_core.group_student_consultancy_manager"
+    />
+
+    <menuitem
+        id="menu_student_consultancy_roles"
+        name="Roles"
+        parent="menu_student_consultancy_hr_root"
+        action="action_student_consultancy_roles"
+        sequence="40"
+        groups="student_consultancy_core.group_student_consultancy_manager"
+    />
+</odoo>

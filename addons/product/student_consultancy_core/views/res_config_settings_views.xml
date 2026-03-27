@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_config_settings_student_consultancy" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.student.consultancy</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Student Consultancy" name="student_consultancy_core" groups="base.group_system">
+                    <block title="Product Identity">
+                        <setting string="Instance Name" help="Internal label for this single-consultancy instance.">
+                            <field name="sc_instance_name"/>
+                        </setting>
+                        <setting string="Instance Code" help="Stable technical slug for exports and integrations.">
+                            <field name="sc_instance_code"/>
+                        </setting>
+                    </block>
+                    <block title="Curated Mode Checks">
+                        <setting string="Configuration Status" help="Warnings about unsupported apps and multi-company setup.">
+                            <field name="sc_configuration_warnings" nolabel="1" readonly="1" widget="text"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

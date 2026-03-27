@@ -1,0 +1,20 @@
+{
+    "name": "Student Consultancy Website",
+    "summary": "Website-facing settings, public API contract, and application intake endpoints",
+    "version": "18.0.1.0.0",
+    "category": "Website",
+    "author": "180 Degrees Consulting ESCP",
+    "website": "https://github.com/180dc-escp/odoo-student-consultancy",
+    "license": "LGPL-3",
+    "depends": [
+        "student_consultancy_core",
+        "student_consultancy_contacts",
+        "student_consultancy_hr",
+        "student_consultancy_recruitment",
+        "student_consultancy_projects",
+        "website",
+    ],
+    "data": ["views/student_consultancy_website_views.xml"],
+    "installable": True,
+    "application": False,
+}

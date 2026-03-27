@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_student_consultancy_position_user,access_student_consultancy_position_user,model_student_consultancy_position,base.group_user,1,1,1,1
+access_student_consultancy_application_user,access_student_consultancy_application_user,model_student_consultancy_application,base.group_user,1,1,1,1

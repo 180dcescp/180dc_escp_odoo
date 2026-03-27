@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="ir.config_parameter" name="set_param" eval="('student_consultancy.instance_name', '180 Degrees Consulting ESCP')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('student_consultancy.instance_code', '180dc_escp')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('student_consultancy.website.organization_name', '180 Degrees Consulting ESCP')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('student_consultancy.website.contact_email', 'escp@180dc.org')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('student_consultancy.website.url', 'https://180dc-escp.org')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('student_consultancy.website.tagline', 'Student-led strategic consulting from ESCP for organizations with social impact ambition.')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('student_consultancy.website.chapter_profile', '180 Degrees Consulting ESCP is a student consultancy chapter delivering strategy and impact projects with a semester-based operating rhythm.')"/>
+
+    <record id="student_consultancy_cycle_schema_escp_semester" model="student.consultancy.cycle.schema">
+        <field name="name">ESCP Semester Cycle</field>
+        <field name="code">escp_semester</field>
+        <field name="mode">semester</field>
+        <field name="start_month">9</field>
+        <field name="start_day">1</field>
+        <field name="description">Default semester calendar for the ESCP chapter distribution.</field>
+    </record>
+</odoo>

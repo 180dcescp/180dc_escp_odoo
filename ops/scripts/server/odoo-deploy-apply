@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MODULES="${1:?modules csv required}"
+SECRETS_DIR="${REMOTE_SECRETS_DIR:-/etc/180dc/odoo}"
+APP_DIR="${APP_DIR:-/opt/180dc/apps/odoo}"
+COMPOSE_ARGS=(--project-directory "$APP_DIR" -f "$APP_DIR/ops/compose/docker-compose.yml")
+
+test -f "$SECRETS_DIR/.env"
+test -f "$SECRETS_DIR/odoo.conf"
+
+cd "$APP_DIR"
+
+docker compose "${COMPOSE_ARGS[@]}" up -d --force-recreate odoo-db
+
+for attempt in $(seq 1 24); do
+  status="$(docker inspect odoo-db --format '{{.State.Health.Status}}')"
+  if [ "$status" = "healthy" ]; then
+    break
+  fi
+  sleep 5
+done
+
+test "$(docker inspect odoo-db --format '{{.State.Health.Status}}')" = "healthy"
+
+docker compose "${COMPOSE_ARGS[@]}" stop odoo >/dev/null 2>&1 || true
+docker compose "${COMPOSE_ARGS[@]}" rm -f odoo >/dev/null 2>&1 || true
+docker compose "${COMPOSE_ARGS[@]}" run --rm --no-deps odoo odoo -c /etc/odoo/odoo.conf -d odoo -u "$MODULES" --stop-after-init
+docker compose "${COMPOSE_ARGS[@]}" up -d --force-recreate odoo
+
+for attempt in $(seq 1 24); do
+  status="$(docker inspect odoo --format '{{.State.Health.Status}}')"
+  if [ "$status" = "healthy" ]; then
+    exit 0
+  fi
+  sleep 5
+done
+
+test "$(docker inspect odoo --format '{{.State.Health.Status}}')" = "healthy"
